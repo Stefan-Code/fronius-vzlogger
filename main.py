@@ -24,16 +24,17 @@ while True:
         power = get_power(fronius_ip)
     except InverterException as e:
         print('Inverter not reachable: ', e)
-        power = 0 # Inverter not available
-    try:
-        log_power(power, vzlog_uuid, address=vzlog_ip)
-        print('logged {} Watts'.format(power))
-    except Exception as e:
-        print('exception occured:', e)
-        if bucket.consume(1, block=False):
-            pass
-        else:
-            print('too many exceptions, aborting')
-            raise e
-
+        #power = 0 # Inverter not available
+        pass # dont log anything
+    else:
+        try:
+            log_power(power, vzlog_uuid, address=vzlog_ip)
+            print('logged {} Watts'.format(power))
+        except Exception as e:
+            print('exception occured:', e)
+            if bucket.consume(1, block=False):
+                pass
+            else:
+                print('too many exceptions, aborting')
+                raise e
     time.sleep(update_rate)
