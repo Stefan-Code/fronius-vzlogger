@@ -25,7 +25,7 @@ while True:
     except InverterException:
         power = 0 # Inverter not available
     try:
-        log_power(power)
+        log_power(power, vzlog_uuid, address=vzlog_ip)
     except Exception as e:
         print('exception occured:', e)
         if bucket.consume(1, block=False):
