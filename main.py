@@ -14,6 +14,7 @@ try:
     vzlog_uuid = sys.argv[3]
 except:
     print('Usage: {} <fronius_ip> <vzlogger_ip> <vzlogger_uuid>'.format(sys.argv[0]))
+    sys.exit(1)
 # Loop forever
 
 update_rate = 20  # seconds
