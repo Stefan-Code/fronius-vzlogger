@@ -22,7 +22,8 @@ bucket = TokenBucket(10, 1/120)
 while True:
     try:
         power = get_power(fronius_ip)
-    except InverterException:
+    except InverterException as e:
+        print('Inverter not reachable: ', e)
         power = 0 # Inverter not available
     try:
         log_power(power, vzlog_uuid, address=vzlog_ip)
