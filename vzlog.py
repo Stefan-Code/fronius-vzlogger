@@ -8,7 +8,7 @@ def log_power(value, uuid, *args, **kwargs):
     protocol = kwargs.get('protocol', 'http')
     url = "{protocol}://{address}:{port}/middleware.php/data/{uuid}.json?value={value}".format(protocol=protocol, address=address, port=port, uuid=uuid, value=value)
     if timestamp:
-        url += "timestamp={timestamp}".format(timestamp=timestamp)
+        url += "&timestamp={timestamp}".format(timestamp=timestamp)
     try:
         response = requests.post(url)
     except Exception as e:
