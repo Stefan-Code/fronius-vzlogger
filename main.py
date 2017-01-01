@@ -13,7 +13,7 @@ try:
     vzlog_ip = sys.argv[2]
     vzlog_uuid = sys.argv[3]
 except:
-    print('Usage: {scriptname} <fronius_ip> <vzlogger_ip> <vzlogger_uuid>'.format(sys.argv[0]))
+    print('Usage: {} <fronius_ip> <vzlogger_ip> <vzlogger_uuid>'.format(sys.argv[0]))
 # Loop forever
 
 update_rate = 20  # seconds
