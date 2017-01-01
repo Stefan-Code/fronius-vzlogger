@@ -26,6 +26,7 @@ while True:
         power = 0 # Inverter not available
     try:
         log_power(power, vzlog_uuid, address=vzlog_ip)
+        print('logged {} Watts'.format(power=power))
     except Exception as e:
         print('exception occured:', e)
         if bucket.consume(1, block=False):
@@ -33,3 +34,5 @@ while True:
         else:
             print('too many exceptions, aborting')
             raise e
+
+    time.sleep(update_rate)
