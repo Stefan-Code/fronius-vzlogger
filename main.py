@@ -19,14 +19,26 @@ except:
 
 update_rate = 20  # seconds
 bucket = TokenBucket(10, 1/120)
+fronius_consecutive_errors = 0
+fronius_consecutive_threshold = 3
+fronius_unreachable = False
+
 while True:
     try:
         power = get_power(fronius_ip)
     except InverterException as e:
-        print('Inverter not reachable: ', e)
-        #power = 0 # Inverter not available
-        pass # dont log anything
+        fronius_consecutive_errors += 1
+        power = None
+        print('Inverter not reachable (#{}): '.format(fronius_consecutive_errors), e)
+        if fronius_consecutive_errors > fronius_consecutive_threshold and not fronius_unreachable:
+            # seems like the inverter is really down, log 0 watts ONCE:
+            print("marking inverter as unreachable!")
+            fronius_unreachable = True
+            power = 0
     else:
+        fronius_consecutive_errors = 0
+        fronius_unreachable = False
+    if power is not None:
         try:
             log_power(power, vzlog_uuid, address=vzlog_ip)
             print('logged {} Watts'.format(power))
