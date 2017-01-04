@@ -47,6 +47,9 @@ while True:
             print("marking inverter as unreachable!")
             log_power_handled(0)
     else:
+        if fronius_consecutive_errors >= fronius_consecutive_threshold:
+            log_power_handled(0)
+        time.sleep(1)
         log_power_handled(power)
         fronius_consecutive_errors = 0
     time.sleep(update_rate)
