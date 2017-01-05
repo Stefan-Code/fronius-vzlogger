@@ -4,7 +4,7 @@ import requests
 
 def get_power(ip, device_id=1):
     try:
-        response = requests.get('http://{ip}/solar_api/v1/GetInverterRealtimeData.cgi?Scope=Device&DeviceId={device_id}&DataCollection=CommonInverterData'.format(ip=ip, device_id=device_id))
+        response = requests.get('http://{ip}/solar_api/v1/GetInverterRealtimeData.cgi?Scope=Device&DeviceId={device_id}&DataCollection=CommonInverterData'.format(ip=ip, device_id=device_id), timeout=5)
     except requests.exceptions.ConnectionError:
         raise InverterException("Inverter unavailable (Sleeping?)")
     try:

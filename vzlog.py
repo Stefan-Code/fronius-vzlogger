@@ -10,7 +10,7 @@ def log_power(value, uuid, *args, **kwargs):
     if timestamp:
         url += "&timestamp={timestamp}".format(timestamp=timestamp)
     try:
-        response = requests.post(url)
+        response = requests.post(url, timeout=5)
     except Exception as e:
         raise e
     if response.status_code != 200:
